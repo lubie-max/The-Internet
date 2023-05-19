@@ -11,7 +11,7 @@ describe("Broken Images", ()=>{
                 let newElm = cy.wrap(el)
 
                 newElm.invoke('attr', 'src').then((atrVal)=>{
-                    cy.log(atrVal)
+                    // cy.log(atrVal)
 
                     if (atrVal.includes('img')) {
                     cy.log("This is not a broken image")
@@ -23,7 +23,7 @@ describe("Broken Images", ()=>{
                     }
 
                 });
-            // cy.log("hi",newElm)
+           
 
         })
 
