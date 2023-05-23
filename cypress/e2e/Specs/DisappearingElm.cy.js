@@ -15,7 +15,7 @@ describe('Disappearing Elements', ()=>{
 
         POM.getAllItems().eq(i).click();
 
-        POM.getHeader().then((elm)=>{
+        cy.get('h1').then((elm)=>{
         //    const txt= cy.wrap(elm.text())
            if(elm.text() === "Not Found"){
             // expect(elm.text()).to.equal("Not Found");
