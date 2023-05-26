@@ -15,10 +15,10 @@ describe("Dynamic Loading", function(){
 
         // cy.get('[href="/dynamic_loading/1"]').click();
 
-        POM.getDynamicLoadingLink(1)
-        cy.get('button').click();
+        POM.clickDynamicLoadingLink(1)
+        POM.clickButton()
 
-        cy.get('#finish > h4').then(function(elm){
+        POM.getOutputMessage().then(function(elm){
             cy.wrap(elm).should('be.hidden');
 
             expect(elm.text()).to.equal('Hello World!')
@@ -31,13 +31,13 @@ describe("Dynamic Loading", function(){
 
 
         // cy.get('[href="/dynamic_loading/2"]').click();
-        POM.getDynamicLoadingLink(2)
-        
-        cy.get('button').click();
+        POM.clickDynamicLoadingLink(2)
+
+        POM.clickButton()
 
         cy.wait(2000)
 
-        cy.get('#finish > h4').should('not.be.hidden')
+        POM.getOutputMessage().should('not.be.hidden')
 
   
 
