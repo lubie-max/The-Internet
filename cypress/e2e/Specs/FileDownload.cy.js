@@ -5,6 +5,9 @@
 import 'cypress-downloadfile/lib/downloadFileCommand';
 // import { event } from 'cypress/types/jquery';
 
+import 'cypress-downloadfile/lib/downloadFileCommand';
+
+
 
 describe('Download', function(){
 
@@ -13,6 +16,32 @@ describe('Download', function(){
     it('Download File', function(){
 
         cy.visit(Cypress.env('baseUrl')+"download")
+
+        
+        
+        cy.readFile('cypress/downloads/foto2.png','base64').should('exist')
+        
+        // .then((logo)=>{
+        //   cy.log(logo)
+        // })
+
+
+        // cy.log(`${Cypress.env('baseUrl')}`+`${href}`)
+
+        cy.get('a').eq(4)
+  .invoke('attr', 'href')
+  .then(href => {
+    cy.log('Href attribute value:', href);
+    cy.log(`${Cypress.env('baseUrl')}`+href)
+
+
+    // cy.downloadFile(`${Cypress.env('baseUrl')}`+ href)
+
+    // .then(()=>{
+    //     cy.readFile('cypress/downloads/foto2.png','base64').should('exist')
+
+    // })
+  });
 
         const filePath = 'cypress\downloads';
 
@@ -184,7 +213,10 @@ describe('Download', function(){
 
 
 
-        cy.get('[href="download/test1.pdf"]')
+        // cy.get('[href="download/test1.pdf"]').click()
+       
+
+
     })
 
    
