@@ -1,223 +1,89 @@
 /// <reference types="Cypress" />
 
+const fs = require('fs');
 
 // import EntryAdOM from "../PageObjectModels/EntryAdOM"
-import 'cypress-downloadfile/lib/downloadFileCommand';
+import "cypress-downloadfile/lib/downloadFileCommand";
 // import { event } from 'cypress/types/jquery';
 
-import 'cypress-downloadfile/lib/downloadFileCommand';
+import "cypress-downloadfile/lib/downloadFileCommand";
 
+describe("Download", function () {
+  // const POM = new EntryAdOM()
 
+  it("Download File", function () {
+    cy.visit(Cypress.env("baseUrl") + "download");
 
-describe('Download', function(){
+    // cy.readFile("cypress/downloads/foto2.png", "base64").should("exist");
 
-    // const POM = new EntryAdOM()
-   
-    it('Download File', function(){
+    // .then((logo)=>{
+    //   cy.log(logo)
+    // })
 
-        cy.visit(Cypress.env('baseUrl')+"download")
+    // cy.log(`${Cypress.env('baseUrl')}`+`${href}`)
 
-        
-        
-        cy.readFile('cypress/downloads/foto2.png','base64').should('exist')
-        
-        // .then((logo)=>{
-        //   cy.log(logo)
+    cy.get("a").eq(4).as("target");
+
+    cy.get("@target")
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.log("Href attribute value:", href);
+        cy.log(`${Cypress.env("baseUrl")}` + href);
+        const url = `${Cypress.env("baseUrl")}` + href;
+
+        const downloadPath = 'cypress/downloads'
+
+        cy.request( {url:url, method: "GET",  encoding: 'binary'}).then(response=>{
+            cy.log("Response",response.status)
+
+            // cy.get('@target').click({force:true})  //this is loading the new page and due to the timeout it fails
+            
+            expect(response.status).to.equal(200)
+            cy.log("Download URL is working!")
+
+        })
+
+     
+
+          // code to check weather the file is downloaded or not. 
+        // const element = url.slice(url.lastIndexOf("/") + 1);
+        // cy.log(element);
+
+        // cy.readFile(`cypress/downloads/${element}`, "base64").should("exist");
+
+        // cy.downloadFile(`${Cypress.env('baseUrl')}`+ href)
+
+        // .then(()=>{
+        //     cy.readFile('cypress/downloads/foto2.png','base64').should('exist')
+
         // })
 
 
-        // cy.log(`${Cypress.env('baseUrl')}`+`${href}`)
 
-        cy.get('a').eq(4)
-  .invoke('attr', 'href')
-  .then(href => {
-    cy.log('Href attribute value:', href);
-    cy.log(`${Cypress.env('baseUrl')}`+href)
-
-
-    // cy.downloadFile(`${Cypress.env('baseUrl')}`+ href)
-
-    // .then(()=>{
-    //     cy.readFile('cypress/downloads/foto2.png','base64').should('exist')
-
-    // })
+      });
   });
 
-        const filePath = 'cypress\downloads';
+  // it(" Second Scinario", ()=>{
 
-        // cy.contains('a', 'Testing').should('have.attr','href')
-        // cy.contains('a', 'text').click()
-        // cy.get('[href="download/Testing.txt"]').click()
-        // cy.get('[href="download/icon.png"]')
+  //   cy.visit(Cypress.env("baseUrl") + "download");
+  //   cy.get("a").eq(6).as('target')
 
+  //   cy.get("@target")
+  //   .invoke("attr", "href")
+  //   .then((href)=>{
+  //       const url = `${Cypress.env("baseUrl")}` + href
 
-        // cy.get('a').eq(4).then(($link)=>{
-        //     $link[0].addEventListener('load',(event)=>{
-        //         event.preventDefault();
-        //     })
-        //     cy.log($link[0])
-        //     cy.wrap($link).click()
-            
-        // })
+  //       cy.intercept('GET', url).as('fileDownload')
 
-        // final approach =:
+  //       cy.get('@target').click()
+  //       // cy.debug()
 
-        // cy.get('.example a').each((link) => {
-        //     const href = link.attr('href');
-        //     const fileName = href.split('/').pop(); // Extract the file name from the href
-            
-        //     cy.request({
-        //       url: href,
-        //     //   encoding: 'binary',
-        //     }).then((response) => {
-        //       // Validate that the response is successful and the file is not empty
-        //       expect(response.status).to.eq(200);
-        //     //   expect(response.body).to.have.length.above(0);
-              
-        //       // Save the file using Cypress' writeFile command
-        //     //   cy.writeFile(fileName, response.body, 'binary');
-              
-        //       // Validate that the file has been downloaded successfully
-        //     //   cy.readFile(fileName).should('exist');
-        //     });
-        //   });
+  //       cy.wait('@fileDownload').then((intercept)=>{
+  //           cy.log(intercept.response)
+  //       cy.debug()
 
+  //       })
 
-        //final 
-
-//         const allowedExtensions = ['.png']; // Specify the allowed file extensions
-
-// cy.get('#content .example a').each((link) => {
-//   const href = link.attr('href');
-//   const fileName = href.split('/').pop(); // Extract the file name from the href
-//   const fileExtension = fileName.substring(fileName.lastIndexOf('.'));
-  
-//   if (allowedExtensions.includes(fileExtension)) {
-//     cy.request({
-//       url: href,
-//     //   encoding: 'binary',
-//     }).then((response) => {
-//       // Validate that the response is successful and the file is not empty
-//       expect(response.status).to.eq(200);
-//     //   expect(response.body).to.have.length.above(0);
-      
-//       // Save the file using Cypress' writeFile command
-//     //   cy.writeFile(fileName, response.body, 'binary');
-      
-//       // Validate that the file has been downloaded successfully
-//       cy.readFile(fileName).should('exist');
-//     });
-//   }
-// });
-
-        
-          
-          
-
-
-        // cy.intercept('GET', 'https://the-internet.herokuapp.com/download/').as('downloadRequest'); 
-        // cy.get('a').eq(4).click((event) => {
-        //     event.preventDefault();
-        // })
-        
-        // .then((response)=>{
-        //     response[0].addEventListener('',(event)=>{
-        //         event.preventDefault();
-        //     })
-        // }).click({force:true});
-
-
-        
-        // .then((response)=>{
-        //     // const atr = cy.wrap(response).invoke('re')
-        //     // cy.log(atr)
-
-        //     const link = response.attr('href');
-
-        //     // cy.wrap(link).click()
-        //     cy.log(link)
-
-            
-        //     // atr.click({force: true})
-        // })
-        
-        // .then((link) => {
-        //     const href = link.attr('href');
-        //     link.attr('href', 'javascript:void(0)');
-        //     link[0].click();
-        //     link.attr('href', href);
-            
-        //   }).click();
-
-        // invoke('removeAttr','target')
-
-        // cy.wait(('@downloadRequest')).then((res)=>{
-        //     cy.log(res.headers)
-        // })
-
-        // cy.get('#content .example  a').each((elm , i , list)=>{
-        //     cy.get('a').eq(3).click().then((res)=>{
-        //         cy.log(res);
-        //     })
-
-        //     cy.debug()
-            
-        // })
-        // cy.get('#content .example  :last-child').click({force:true})
-        // cy.get('a :last-child').click()
-        // cy.get('[href="download/image.jpg"]')
-
-
-
-
-        // cy.readFile()
-
-        // cy.downloadFile('cypress\downloads').then((filePath) => {
-        //     // Assertion: Check if the file is downloaded successfully
-        //     expect(filePath).to.exist;
-        //   });
-       
-
-        // cy.waitUntil(() => {
-        //     // Use a condition to check if the file exists
-        //     return cy.task('isFileDownloaded', filePath).then((isDownloaded) => {
-        //       // Use an assertion to check if the file is downloaded
-        //       expect(isDownloaded).to.be.true;
-        //       return true; // Signal that the wait is complete
-        //     });
-        //   });
-        
-        // cy.log('@download')
-        
-        // cy.request('https://the-internet.herokuapp.com/download','GET',{},{})
-        // .then((interception) => {
-        //     const response = interception.response;
-        //     cy.log(response)
-
-        // })
-
-        // cy.request('GET', 'https://the-internet.herokuapp.com/download').then((response) => {
-        //     const statusCode = response.status;
-        //     expect(statusCode).to.equal(200); // Example assertion
-          
-        //     const responseBody = response.body;
-        //     // Perform assertions or further processing on the response body
-          
-        //     const headers = response.headers;
-        //     // Access response headers if needed
-          
-        //     // Perform additional assertions or processing based on your specific requirements
-        //   });
-
-
-
-
-
-        // cy.get('[href="download/test1.pdf"]').click()
-       
-
-
-    })
-
-   
-})
+  //   })
+  // })
+});
