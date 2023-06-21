@@ -1,6 +1,11 @@
 /// <reference types="Cypress" />
 
+import FileUploadOM from "../PageObjectModels/FileUploadOM";
+
 describe("File Upload", () => {
+
+  const POM = new FileUploadOM
+
   it("should upload a file to the server", () => {
     cy.visit(Cypress.env("baseUrl") + "upload");
 
@@ -9,23 +14,15 @@ describe("File Upload", () => {
     const fileName = "arcanys logo.png";
     const filePath = "/arcanys logo.png";
 
-    cy.fixture(filePath).then((fileContent) => {
-      cy.get("#file-upload").then((input) => {
-        cy.window().then((win) => {
-          const file = new win.File([fileContent], fileName, {
-            type: "image/png",
-          });
-          const dataTransfer = new win.DataTransfer();
 
-          dataTransfer.items.add(file);
-          input[0].files = dataTransfer.files;
-          input.trigger("change", { force: true });
-        });
-      });
-    });
+    POM.uploadAFile(fileName, filePath)
 
-    cy.get("#file-submit").click();
+    // cy.get("#file-submit").click();
 
-    cy.get("#uploaded-files").contains(fileName)
+    POM.submitTheFile()
+
+
+    // cy.get("#uploaded-files").contains(fileName)
+    POM.varifyTheFile(fileName)
   });
 });

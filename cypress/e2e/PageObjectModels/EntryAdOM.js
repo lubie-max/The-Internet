@@ -16,7 +16,7 @@ class EntryAdOM {
     }
 
     restartModalProccess(){
-       return cy.get('#restart-ad').click()
+       return cy.get('#restart-ad').click({force: true})
     }
 
 
