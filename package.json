@@ -13,5 +13,8 @@
     "cypress-downloadfile": "^1.2.3",
     "cypress-real-events": "^1.8.1",
     "neat-csv": "5.1.0"
+  },
+  "dependencies": {
+    "cypress-iframe": "^1.0.1"
   }
 }
