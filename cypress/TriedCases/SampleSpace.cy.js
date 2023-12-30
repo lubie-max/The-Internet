@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 // import { should } from "chai"
 // import ShopObjects from "../PageObjects/ShopObjects";
-import SampleSpecOM from "../PageObjectModels/SampleSpecOM";
+import SampleSpecOM from "../e2e/PageObjectModels/SampleSpecOM";
 
 describe("Fixture,JSON with custom commands ", () => {
   // initializing obj of ShopeObjects class
