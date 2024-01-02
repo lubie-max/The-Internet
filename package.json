@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cypress run",
-    "open":"cypress open",
+    "open": "cypress open",
     "in-browser": "npm run test -- --browser chrome ",
     "in-shell": "npm run test --  --headed"
   },
@@ -15,6 +15,7 @@
     "cypress": "^12.12.0",
     "cypress-downloadfile": "^1.2.3",
     "cypress-real-events": "^1.8.1",
+    "cypress-xpath": "^2.0.1",
     "neat-csv": "5.1.0"
   },
   "dependencies": {
